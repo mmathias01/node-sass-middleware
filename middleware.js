@@ -6,7 +6,8 @@ var sass = require('node-sass'),
     url = require('url'),
     dirname = require('path').dirname,
     mkdirp = require('mkdirp'),
-    join = require('path').join;
+    join = require('path').join,
+    basename = require('path').basename;
 
 var imports = {};
 
@@ -90,6 +91,9 @@ module.exports = function(options) {
 
   var sourceMap = options.sourceMap || null;
 
+  //relative folder for scss files
+  var sassFolder = options.sassFolder || '';
+
   // Default compile callback
   options.compile = options.compile || function() {
     return sass;
@@ -110,10 +114,13 @@ module.exports = function(options) {
       return next();
     }
 
-    log('scssPath',options.scssPath);
-    
+
+    //if(sassFolder) {
+    //  sassFolder = join(dirname(path), sassFolder, basename(path));
+    //}
+
     var cssPath = join(dest, path),
-        sassPath = join(src, path.replace(/\.css$/, sassExtension)),
+        sassPath = join(src, dirname(path), sassFolder, basename(path).replace(/\.css$/, sassExtension)),
         sassDir = dirname(sassPath);
 
     if (root) {
