@@ -110,6 +110,8 @@ module.exports = function(options) {
       return next();
     }
 
+    log('scssPath',options.scssPath);
+    
     var cssPath = join(dest, path),
         sassPath = join(src, path.replace(/\.css$/, sassExtension)),
         sassDir = dirname(sassPath);
